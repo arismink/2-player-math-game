@@ -10,27 +10,20 @@ class Game
 
   def run_game
     turns = 1
-
+    
     # loop that runs the game until a player no longer has lives
     while @current_player.has_life
       puts "---- TURN: #{turns} ----"
 
       # every turn, needs to initialize a new question
-      new_question = Question.new
+      @new_question = Question.new
 
-      puts new_question.generate_question(@current_player)
+      puts @new_question.generate_question(@current_player)
       print "> "
       player_input = $stdin.gets.chomp.to_i
 
       # get the user input and pass it to check answer
-      if new_question.check_answer(player_input)
-        puts "#{@current_player.name}: YES! You are correct."
-
-      else
-        @current_player.lose_life
-        puts "#{@current_player.name}: Wrong! Correct answer is: #{new_question.answer}"
-
-      end
+      puts self.eval_answer(player_input)
 
       # do not continue forward if current player has zero lives. display results immediately
       break if @current_player.lives == 0 
@@ -46,12 +39,27 @@ class Game
       turns += 1
     end
 
+    self.end_game
+
+  end
+
+  def eval_answer(input)
+    if @new_question.check_answer(input)
+      return "#{@current_player.name}: YES! You are correct."
+
+    else
+      @current_player.lose_life
+      return "#{@current_player.name}: Wrong! Correct answer is: #{@new_question.answer}"
+
+    end
+  end
+
+  def end_game
     puts '----- GAME OVER -----'
 
     puts self.print_winner
     puts 'Better luck next time. Good bye!'
-
-
+  
   end
 
   def switch_player
