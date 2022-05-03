@@ -10,7 +10,8 @@ class Game
 
   def run_game
     turns = 1
-    # # loop that runs the game until a player no longer has lives
+    
+    # loop that runs the game until a player no longer has lives
     while @current_player.has_life
       puts "---- TURN: #{turns} ----"
       correct = false
@@ -34,16 +35,17 @@ class Game
 
       end
 
-      break if @current_player.lives === 0 
+      # do not continue forward if current player has zero lives. display results immediately
+      break if @current_player.lives == 0 
 
-      # display game stat at each turn
+      # display game stat at end of each turn
       print "SCORE: "
       puts self.game_stat
         
-      # call switch_player
+      # switch_players at end of turn
       self.switch_player
 
-      #this also tracks if the end of game
+      # add to turn counter
       turns += 1
     end
 
@@ -77,7 +79,7 @@ class Game
   end
 
   def print_winner
-    winner = find_winner
+    winner = self.find_winner
 
     "#{winner.name} wins with a score of #{winner.lives}/3"
   end
