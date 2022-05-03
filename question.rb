@@ -1,4 +1,5 @@
 class Question
+  attr_reader :answer
 
   def initialize
     @rand1 = randNum_gen

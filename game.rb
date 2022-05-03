@@ -10,11 +10,10 @@ class Game
 
   def run_game
     turns = 1
-    
+
     # loop that runs the game until a player no longer has lives
     while @current_player.has_life
       puts "---- TURN: #{turns} ----"
-      correct = false
 
       # every turn, needs to initialize a new question
       new_question = Question.new
@@ -25,13 +24,11 @@ class Game
 
       # get the user input and pass it to check answer
       if new_question.check_answer(player_input)
-        correct = true
         puts "#{@current_player.name}: YES! You are correct."
 
       else
-        correct = false
         @current_player.lose_life
-        puts "#{@current_player.name}: Seriously? No!"
+        puts "#{@current_player.name}: Wrong! Correct answer is: #{new_question.answer}"
 
       end
 
@@ -69,12 +66,12 @@ class Game
   end
 
   def game_stat
-    # gets called every turn
     # displays player vs player & lives
     "#{@player1.name}: #{@player1.lives}/3 vs #{@player2.name}: #{@player2.lives}/3"
   end
 
   def find_winner
+    # return winning player
     @player1.lives > @player2.lives ? @player1 : @player2
   end
 

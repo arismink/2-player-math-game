@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :lives, :name
+  attr_reader :lives, :name
 
   def initialize(name)
     @name = name
@@ -12,7 +12,7 @@ class Player
 
   # check if player still has lives
   def has_life
-    lives > 0 ? true : false
+    @lives > 0 ? true : false
   end
 
 
